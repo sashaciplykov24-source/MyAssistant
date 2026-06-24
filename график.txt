@@ -1,0 +1,43 @@
+сделать /capabilities,/scan
+расширять program_scanner
+посмотреть в чат
+предлагаю сделать обозначения папок пользователя и установку модели пользователя
+авто удаление программ перед сканированием
+удаление мусора
+
+
+команды
+/scan
+/debug
+/setting
+/help
+/version
+/clear
+
+план:
+MyAssistant
+│
+├── capabilities
+│   ├── capabilities.json
+│   ├── programs.json
+│   ├── system.json
+│   ├── filesystem.json
+│   └── internet.json
+│
+├── modules
+│   ├── dispatcher.py
+│   ├── programs.py
+│   ├── filesystem.py
+│   ├── system.py
+│   ├── logger.py
+│   ├── memory.py
+│   └── ai.py
+│
+├── data
+│   ├── history.json
+│   └── logs.txt
+│
+├── settings
+│   └── config.json
+│
+└── main.py

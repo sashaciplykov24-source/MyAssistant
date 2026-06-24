@@ -1,0 +1,33 @@
+{
+    "version": "1.0",
+
+    "programs": {
+        "enabled": false,
+        "description": "Запуск и управление программами"
+    },
+
+    "filesystem": {
+        "enabled": false,
+        "description": "Работа с файлами и папками"
+    },
+
+    "system": {
+        "enabled": false,
+        "description": "Управление системой Windows"
+    },
+
+    "internet": {
+        "enabled": false,
+        "description": "Работа с интернетом"
+    },
+
+    "voice": {
+        "enabled": false,
+        "description": "Голосовой ввод и вывод"
+    },
+
+    "vision": {
+        "enabled": false,
+        "description": "Работа с изображениями и экраном"
+    }
+}

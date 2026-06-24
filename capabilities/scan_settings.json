@@ -1,0 +1,24 @@
+{
+    "folders": [
+        {
+            "name": "Program Files",
+            "path": "C:\\Program Files",
+            "enabled": true
+        },
+        {
+            "name": "Program Files (x86)",
+            "path": "C:\\Program Files (x86)",
+            "enabled": true
+        },
+        {
+            "name": "Steam",
+            "path": "C:\\Program Files (x86)\\Steam",
+            "enabled": true
+        },
+        {
+            "name": "Games",
+            "path": "D:\\Games",
+            "enabled": false
+        }
+    ]
+}

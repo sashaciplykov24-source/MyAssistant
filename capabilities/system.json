@@ -1,0 +1,6 @@
+{
+    "allow_shutdown": false,
+    "allow_restart": false,
+    "allow_sleep": true,
+    "allow_lock": true
+}
