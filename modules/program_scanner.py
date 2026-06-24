@@ -3,6 +3,20 @@ import json
 from paths import PROGRAMS_FILE
 from theme import *
 
+IGNORE_FILES = {
+    "uninstall.exe",
+    "unins000.exe",
+    "setup.exe",
+    "installer.exe",
+    "update.exe",
+    "updater.exe",
+    "crashhandler.exe",
+    "helper.exe",
+    "maintenancetool.exe",
+    "vc_redist.x64.exe",
+    "vc_redist.x86.exe"
+}
+
 from paths import SCAN_SETTINGS_FILE
 def load_scan_folders():
 
@@ -29,8 +43,22 @@ def scan_programs():
             continue
 
         for root, dirs, files in os.walk(folder):
+            dirs[:] = [
+                d for d in dirs
+                if d.lower() not in {
+                    "__pycache__",
+                    "temp",
+                    "cache",
+                    "logs",
+                    "redist",
+                    "redistributable",
+                    "$recycle.bin"
+                }
+            ]
 
             for file in files:
+                if file.lower() in IGNORE_FILES:
+                    continue
 
                 if file.lower().endswith(".exe"):
 

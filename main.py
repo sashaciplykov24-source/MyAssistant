@@ -169,6 +169,7 @@ while True:
                 print('напишите путь к папке в формате (C://Program Files (x86)//Steam)(двойной слеш в обратную сторону(/ > \))')
                 way=input()
                 add_folder(fold,way)
+                write_system(f'добавлена папка {fold} в сканирование')
             elif q=='2':
                 break
             elif q=='3':
@@ -178,6 +179,7 @@ while True:
                     print('такого номера нет')
                 else:
                     remove_folder(fol_name[n])
+                    write_system(f'удалена папка {fol_name[n]} из сканирования')
             elif q=='4':
                 activein=False
                 print('напишите номер папки')
@@ -190,6 +192,10 @@ while True:
                     else:
                         activein=True
                 set_enabled(fol_name[n],activein)
+                write_system(f'активность папки {fol_name[n]} изменено на {activein}')
+            else:
+                print(F'{ERROR}команда не распозднана{RESET}')
+                write_system("ошибка команды в настройках сканирования")
         continue
 
     history.append({
