@@ -64,7 +64,8 @@ def scan_programs():
 
                     name = os.path.splitext(file)[0]
 
-                    programs[name] = os.path.join(root, file)
+                    if name not in programs:
+                        programs[name] = os.path.join(root, file)
 
     return programs
 def save_programs(programs):
