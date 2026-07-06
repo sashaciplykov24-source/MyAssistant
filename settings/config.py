@@ -1,4 +1,5 @@
-MODEL = "qwen2.5:3b"
+VERSION_PROGRAM='1.3'
+
 
 SYSTEM_PROMPT = """
 Ты локальный помощник Windows.

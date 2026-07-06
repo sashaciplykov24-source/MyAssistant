@@ -12,6 +12,8 @@
 /version
 /clear
 /models
+/info
+/backup
 
 план:
 MyAssistant

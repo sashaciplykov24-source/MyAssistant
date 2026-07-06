@@ -8,6 +8,8 @@ DATA_DIR = PROJECT_DIR / "data"
 SETTINGS_DIR = PROJECT_DIR / "settings"
 MODULES_DIR = PROJECT_DIR / "modules"
 CAPABILITIES_DIR = PROJECT_DIR / "capabilities"
+SETTINGS_DIR = PROJECT_DIR / "settings"
+MODEL_FILE = SETTINGS_DIR / "model.json"
 
 # Файлы
 HISTORY_FILE = DATA_DIR / "history.json"

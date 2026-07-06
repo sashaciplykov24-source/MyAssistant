@@ -1,5 +1,5 @@
 import ollama
-from settings.config import MODEL, SYSTEM_PROMPT
+from settings.config import SYSTEM_PROMPT
 import json
 
 def load_model():

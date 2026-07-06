@@ -1,5 +1,7 @@
 from modules.ai import ask_ai
 
+from settings.config import VERSION_PROGRAM
+
 from paths import *
 
 from theme import *
@@ -74,8 +76,8 @@ def model_exists(model_name):
 
     models = ollama.list()
 
-    for model in models["models"]:
-        if model["name"] == model_name:
+    for model in models.models:
+        if model.model == model_name:
             return True
 
     return False
@@ -90,6 +92,35 @@ def get_models():
         result.append(model.model)
 
     return result
+def show_info(history):
+
+    print("\n========================")
+    print(" MyAssistant ")
+    print("========================")
+
+    print(f"Версия: {VERSION_PROGRAM}")
+
+    try:
+        with open(MODEL_FILE, "r", encoding="utf-8") as file:
+            model_data = json.load(file)
+            print(f"Модель: {model_data['model']}")
+    except:
+        print("Модель: неизвестно")
+
+    print(f"Сообщений в памяти: {len(history)}")
+
+    try:
+        with open(PROGRAMS_FILE, "r", encoding="utf-8") as file:
+            programs = json.load(file)
+
+        print(f"Найдено программ: {len(programs)}")
+
+    except:
+        print("Найдено программ: 0")
+
+    print("========================")
+
+
 from modules.program_scanner import update_program_database
 #
 #count = update_program_database()
@@ -251,11 +282,15 @@ while True:
         mod=input('>')
         if model_exists(mod):
             save_model(mod)
+            print(f'{SYSTEM}модель успешно изменена на- "{mod}" {RESET}')
             write_system(f'пользователь установил модель AI агента-"{mod}"')
         else:
             print(f'{ERROR}модель не найдена{RESET}')
             write_system(f'модель-"{mod}" не найдена')
-
+        continue
+    elif user.lower() == "/info":
+        show_info(history)
+        continue
 
     history.append({
         "role": "user",
