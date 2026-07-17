@@ -1,6 +1,5 @@
 from datetime import datetime
-
-LOG_FILE = "data/logs.txt"
+from paths import LOG_FILE
 
 def write_system(message):
 

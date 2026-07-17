@@ -1,10 +1,11 @@
 import ollama
 from settings.config import SYSTEM_PROMPT
 import json
+from paths import MODEL_FILE
 
 def load_model():
 
-    with open("settings/model.json", "r", encoding="utf-8") as file:
+    with open(MODEL_FILE, "r", encoding="utf-8") as file:
 
         data = json.load(file)
 

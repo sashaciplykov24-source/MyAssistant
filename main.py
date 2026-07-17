@@ -12,6 +12,8 @@ from modules.logger import write_system
 
 from modules.memory import load_history, save_history
 
+from modules.dispatcher import dispatch, parse_command
+
 import os
 
 import json
@@ -62,7 +64,7 @@ def set_enabled(name, enabled):
     save_settings(data)
 def save_model(model):
 
-    with open("settings/model.json", "w", encoding="utf-8") as file:
+    with open(MODEL_FILE, "w", encoding="utf-8") as file:
 
         json.dump(
             {"model": model},
@@ -138,12 +140,46 @@ def format_size(size):
     return f"{size:.2f} ПБ"
 
 def clear_history():
-    with open("data/history.json", "w", encoding="utf-8") as file:
+    with open(HISTORY_FILE, "w", encoding="utf-8") as file:
         json.dump([], file, ensure_ascii=False, indent=4)
 
 def clear_logs():
-    with open("data/logs.txt", "w", encoding="utf-8") as file:
+    with open(LOG_FILE, "w", encoding="utf-8") as file:
         file.write("")
+
+
+TRUSTED_PROGRAMS = {
+    "steam",
+    "стим",
+    "chrome",
+    "google chrome",
+    "браузер",
+    "edge",
+    "msedge",
+    "firefox",
+    "opera",
+    "notepad",
+    "блокнот",
+    "calculator",
+    "calc",
+    "калькулятор",
+    "paint"
+}
+
+
+def needs_confirmation(command):
+
+    action = command.get("command")
+
+    if action == "create_folder":
+        return False
+
+    if action == "open_program":
+        program = command.get("program", "").strip().lower()
+        return program not in TRUSTED_PROGRAMS
+
+    return True
+
 
 history = load_history()
 
@@ -159,11 +195,15 @@ while True:
 
     size_logs = os.path.getsize(LOG_FILE)
     size_history = os.path.getsize(HISTORY_FILE)
-    if format_size(size_history).split()[1]=='ГБ':
-        if float(format_size(size_history)).split()[0]>=10:
+    formatted_history_size = format_size(size_history).split()
+    formatted_logs_size = format_size(size_logs).split()
+
+    if formatted_history_size[1] == 'ГБ':
+        if float(formatted_history_size[0]) >= 10:
             print(f'{ERROR}внимание память слишком большая{RESET}')
-    if format_size(size_logs).split()[1]=='ГБ':
-        if float(format_size(size_logs)).split()[0]>=5:
+
+    if formatted_logs_size[1] == 'ГБ':
+        if float(formatted_logs_size[0]) >= 5:
             print(f'{ERROR}внимание логи слишком большие{RESET}')
 
     user = input("\nТы: ")
@@ -298,6 +338,32 @@ while True:
     })
 
     answer = ask_ai(history)
+
+    command = parse_command(answer)
+
+    if command:
+
+        action = command.get("command")
+        action_names = {
+            "open_program": "открыть программу",
+            "create_folder": "создать папку",
+            "delete_file": "удалить файл"
+        }
+        target = command.get("program") or command.get("path")
+
+        if needs_confirmation(command):
+
+            print(f"\n{SYSTEM}ИИ просит выполнить действие: {action_names.get(action, action)}")
+            print(f"Цель: {target}{RESET}")
+
+            confirm = input("Выполнить? (да/нет): ").strip().lower()
+
+            if confirm not in ["да", "д", "yes", "y"]:
+                answer = "Действие отменено."
+            else:
+                answer = dispatch(command)
+        else:
+            answer = dispatch(command)
 
     history.append({
         "role": "assistant",

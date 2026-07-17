@@ -1,6 +1,6 @@
 import os
 import json
-from paths import PROGRAMS_FILE
+from paths import PROGRAMS_FILE, SCAN_SETTINGS_FILE
 from theme import *
 
 IGNORE_FILES = {
@@ -17,7 +17,6 @@ IGNORE_FILES = {
     "vc_redist.x86.exe"
 }
 
-from paths import SCAN_SETTINGS_FILE
 def load_scan_folders():
 
     with open(SCAN_SETTINGS_FILE, "r", encoding="utf-8") as file:
@@ -32,10 +31,12 @@ def load_scan_folders():
             folders.append(folder["path"])
 
     return folders
-folders=load_scan_folders()
+
+
 def scan_programs():
 
     programs = {}
+    folders = load_scan_folders()
 
     for folder in folders:
 

@@ -1,7 +1,6 @@
 import json
 import os
-
-HISTORY_FILE = "data/history.json"
+from paths import HISTORY_FILE
 
 
 def load_history():
