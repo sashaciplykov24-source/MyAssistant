@@ -148,7 +148,7 @@ def clear_logs():
         file.write("")
 
 
-TRUSTED_PROGRAMS = {
+DEFAULT_TRUSTED_PROGRAMS = {
     "steam",
     "стим",
     "chrome",
@@ -167,6 +167,27 @@ TRUSTED_PROGRAMS = {
 }
 
 
+def load_trusted_programs():
+
+    if not TRUSTED_PROGRAMS_FILE.exists():
+        return DEFAULT_TRUSTED_PROGRAMS
+
+    try:
+        with open(TRUSTED_PROGRAMS_FILE, "r", encoding="utf-8") as file:
+            programs = json.load(file)
+    except (OSError, json.JSONDecodeError):
+        return DEFAULT_TRUSTED_PROGRAMS
+
+    if not isinstance(programs, list):
+        return DEFAULT_TRUSTED_PROGRAMS
+
+    return {
+        program.strip().lower()
+        for program in programs
+        if isinstance(program, str) and program.strip()
+    }
+
+
 def needs_confirmation(command):
 
     action = command.get("command")
@@ -174,9 +195,25 @@ def needs_confirmation(command):
     if action == "create_folder":
         return False
 
+    if action == "open_folder":
+        return False
+
+    if action == "list_folder":
+        return False
+
+    if action == "path_info":
+        return False
+
+    if action == "create_file":
+        return False
+
+    if action == "delete_empty_folder":
+        return False
+
     if action == "open_program":
         program = command.get("program", "").strip().lower()
-        return program not in TRUSTED_PROGRAMS
+        trusted_programs = load_trusted_programs()
+        return program not in trusted_programs
 
     return True
 
@@ -346,7 +383,12 @@ while True:
         action = command.get("command")
         action_names = {
             "open_program": "открыть программу",
+            "open_folder": "открыть папку",
+            "list_folder": "показать содержимое папки",
+            "path_info": "показать информацию о пути",
             "create_folder": "создать папку",
+            "create_file": "создать файл",
+            "delete_empty_folder": "удалить пустую папку",
             "delete_file": "удалить файл"
         }
         target = command.get("program") or command.get("path")

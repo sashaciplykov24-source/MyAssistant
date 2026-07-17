@@ -1,4 +1,4 @@
-VERSION_PROGRAM = "1.5"
+VERSION_PROGRAM = "1.6"
 
 
 SYSTEM_PROMPT = """
@@ -15,9 +15,19 @@ SYSTEM_PROMPT = """
 
 OPEN_PROGRAM:имя
 
+OPEN_FOLDER:путь
+
+LIST_FOLDER:путь
+
+PATH_INFO:путь
+
 CREATE_FOLDER:путь
 
+CREATE_FILE:путь
+
 DELETE_FILE:путь
+
+DELETE_EMPTY_FOLDER:путь
 
 Иначе отвечай обычным текстом.
 """

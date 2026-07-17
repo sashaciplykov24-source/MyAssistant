@@ -9,8 +9,9 @@ SETTINGS_DIR = PROJECT_DIR / "settings"
 MODULES_DIR = PROJECT_DIR / "modules"
 CAPABILITIES_DIR = PROJECT_DIR / "capabilities"
 KNOWLEDGE_DIR = PROJECT_DIR / "knowledge"
-SETTINGS_DIR = PROJECT_DIR / "settings"
 MODEL_FILE = SETTINGS_DIR / "model.json"
+TRUSTED_PROGRAMS_FILE = SETTINGS_DIR / "trusted_programs.json"
+FOLDER_SETTINGS_FILE = SETTINGS_DIR / "folder_settings.json"
 
 # Файлы
 HISTORY_FILE = DATA_DIR / "history.json"
